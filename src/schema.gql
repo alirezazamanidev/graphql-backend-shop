@@ -3,11 +3,25 @@
 # ------------------------------------------------------
 
 type User {
-  id: Int!
+  phone: String!
+  username: String
   fullname: String
-  email: String!
+}
+
+type AuthResponse {
+  message: String!
+  code: String
+  token: String
 }
 
 type Query {
   getUser(id: Int!): User!
+}
+
+type Mutation {
+  sendOtp(sendOtpInput: SendOtpInput!): AuthResponse!
+}
+
+input SendOtpInput {
+  phone: String!
 }
