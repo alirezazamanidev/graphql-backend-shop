@@ -3,11 +3,19 @@
 # ------------------------------------------------------
 
 type User {
+  id: Int!
   phone: String!
   username: String
   fullname: String
   phone_verify: Boolean!
+  created_at: DateTime!
+  updated_at: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type AuthResponse {
   message: String!
@@ -17,6 +25,7 @@ type AuthResponse {
 
 type Query {
   getUser(id: Int!): User!
+  users: User!
 }
 
 type Mutation {

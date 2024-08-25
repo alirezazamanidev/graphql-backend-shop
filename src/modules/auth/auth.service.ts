@@ -7,6 +7,7 @@ import { CheckOtpInput, SendOtpInput } from './dto/auth.dto';
 import { Otp } from '../user/entities/otp.entity';
 import { randomInt } from 'crypto';
 import { TokenService } from './token.service';
+import { Query } from '@nestjs/graphql';
 @Injectable()
 export class AuthService {
   constructor(
@@ -76,4 +77,24 @@ export class AuthService {
       token,
     };
   }
+  async validateAccessToken(token: string) {
+    const { userId } = this.tokenService.verifyAccessToken(token);
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      
+      select: {
+       id:true,
+       fullname:true,
+       username:true,
+       phone:true,
+       phone_verify:true,
+       created_at:true,
+       updated_at:true
+      },
+    });
+   
+    if (!user) throw new UnauthorizedException("login Again!");
+    return user
+  }
+
 }
