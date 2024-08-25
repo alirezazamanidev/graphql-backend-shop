@@ -6,6 +6,7 @@ type User {
   phone: String!
   username: String
   fullname: String
+  phone_verify: Boolean!
 }
 
 type AuthResponse {
@@ -20,8 +21,14 @@ type Query {
 
 type Mutation {
   sendOtp(sendOtpInput: SendOtpInput!): AuthResponse!
+  checkOtp(checkOtpInput: CheckOtpInput!): AuthResponse!
 }
 
 input SendOtpInput {
   phone: String!
+}
+
+input CheckOtpInput {
+  phone: String!
+  code: String!
 }

@@ -18,6 +18,9 @@ export class User extends BaseEntity  {
     @Column({nullable:true})
     @Field({nullable:true})
     fullname?:string
+    @Column({default:false})
+    @Field()
+    phone_verify:boolean
     @Column({nullable:true})
     otpId:number
     @OneToOne(()=>Otp,otp=>otp.user,{onDelete:'CASCADE'})
