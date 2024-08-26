@@ -21,7 +21,7 @@ export class AuthResolver {
   }
   @UseGuards(GqlAuthGuard)
   @Query((returns) => User)
-  users(@Context('req') req: Request) {
+  userPayload(@Context('req') req: Request) {
     return req.user;
   }
 }

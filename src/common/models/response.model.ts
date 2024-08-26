@@ -11,3 +11,8 @@ export class AuthResponse{
     @Field({nullable:true})
     token?:string
 }
+@ObjectType()
+export class SuccessResponse {
+    @Field()
+    messsge:string
+}

@@ -23,14 +23,30 @@ type AuthResponse {
   token: String
 }
 
+type SuccessResponse {
+  messsge: String!
+}
+
+type Category {
+  id: Int!
+  name: String!
+  slug: String!
+  image: String
+  parent: Category
+  children: [Category!]
+  created_at: DateTime!
+  updated_at: DateTime!
+}
+
 type Query {
   getUser(id: Int!): User!
-  users: User!
+  userPayload: User!
 }
 
 type Mutation {
   sendOtp(sendOtpInput: SendOtpInput!): AuthResponse!
   checkOtp(checkOtpInput: CheckOtpInput!): AuthResponse!
+  createCatgory(createCategoryInput: CreateCategoryInput!): SuccessResponse!
 }
 
 input SendOtpInput {
@@ -40,4 +56,11 @@ input SendOtpInput {
 input CheckOtpInput {
   phone: String!
   code: String!
+}
+
+input CreateCategoryInput {
+  name: String!
+  slug: String
+  parentId: Int
+  imageUrl: String
 }
