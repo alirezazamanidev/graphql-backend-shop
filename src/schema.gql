@@ -41,6 +41,7 @@ type Category {
 type Query {
   getUser(id: Int!): User!
   userPayload: User!
+  categories: [Category!]!
 }
 
 type Mutation {

@@ -1,4 +1,4 @@
-import { Args, Mutation, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CategoryService } from './category.service';
 import { Category } from './entities/category.entity';
 import { SuccessResponse } from 'src/common/models/response.model';
@@ -9,6 +9,10 @@ import { CreateCategoryInput } from './dto/create-category.dto';
 export class CategoryResolver {
   constructor(private readonly categoryService: CategoryService) {}
 
+  @Query(()=>[Category])
+  categories(){
+    return this.categoryService.listOfCategories();
+  }
   @Mutation(()=>SuccessResponse)
   createCatgory(@Args('createCategoryInput') createCategoryInput:CreateCategoryInput){
     return this.categoryService.create(createCategoryInput)

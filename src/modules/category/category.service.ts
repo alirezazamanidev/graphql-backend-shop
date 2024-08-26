@@ -5,7 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateCategoryInput } from './dto/create-category.dto';
-import { DeepPartial, Repository } from 'typeorm';
+import { DeepPartial, IsNull, Repository } from 'typeorm';
 import { Category } from './entities/category.entity';
 import slugify from 'slugify';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -43,6 +43,26 @@ export class CategoryService {
  } catch (error) {
     throw new InternalServerErrorException(error.message)
  }
+  }
+  async listOfCategories(){
+    return await this.categoryRepository.find({
+        relations:{children:true},
+        where:{parentId:IsNull()},
+        select:{
+            id:true,
+            name:true,
+            slug:true,
+            image:true,
+            children:{
+                id:true,
+                name:true,
+                slug:true,
+                image:true,
+            },
+            created_at:true,
+            updated_at:true
+        }
+    })
   }
   async findOneById(id: number) {
     const category = await this.categoryRepository.findOneBy({ id });
